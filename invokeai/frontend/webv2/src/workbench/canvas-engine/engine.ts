@@ -1537,7 +1537,7 @@ export const createCanvasEngine = (opts: CanvasEngineOptions): CanvasEngineCoreC
       return;
     }
     gestureEditsStagingHiddenStack = edits;
-    if (renderController.previews.getStaged()) {
+    if (renderController.previews.isStagingView()) {
       scheduler.invalidate({ all: true });
     }
   };
@@ -3124,6 +3124,11 @@ export const createCanvasEngine = (opts: CanvasEngineOptions): CanvasEngineCoreC
     preloadStagedPreview,
     setControlLayerView: (layerId, view) => controlView.set(layerId, view),
     setGuardedFilterPreview,
+    setComparingOriginal: (comparing) => {
+      if (renderController.previews.setComparingOriginal(comparing)) {
+        scheduler.invalidate({ all: true });
+      }
+    },
     setStagedPreview,
     setStagedRegions: (regions) => {
       if (renderController.previews.setStagedRegions(regions)) {

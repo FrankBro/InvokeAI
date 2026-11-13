@@ -841,6 +841,11 @@ export interface CanvasEnginePreviewCapability extends CanvasPreviewCapability {
   ): Promise<'shown' | SubsetOf<CanvasCommandRefusal, 'missing'> | SubsetOf<CanvasTransactionOutcome, 'stale'>>;
   setStagedPreview(input: StagedPreviewInput | null): void;
   /**
+   * Whether the user toggled a selected candidate's preview off to compare with the original. The canvas then keeps
+   * masks and regions hidden, as while the preview shows. Display-only.
+   */
+  setComparingOriginal(comparing: boolean): void;
+  /**
    * Overlay chrome only: outlines where each pending result (staged candidate or result still generating) will land,
    * the selected one emphasized. Absolute document rects; an equal list repaints nothing.
    */

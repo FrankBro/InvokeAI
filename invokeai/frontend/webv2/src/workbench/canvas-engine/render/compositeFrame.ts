@@ -234,8 +234,9 @@ export const createCompositeFrame = (deps: CreateCompositeFrameDeps): CompositeF
       const stagedPreview = previews.getStaged();
       const isolatedGuard = samPreview?.isolated ? samPreview.guard : null;
       const overrides = !isolatedGuard && transformOverrides.size > 0 ? transformOverrides : null;
-      // A shown preview hides masks, regions and the regenerate tint, unless a gesture is editing one of them.
-      const staging = stagedPreview !== null && !deps.isEditingStagingHiddenStack();
+      // The staging view (a shown preview, or a candidate toggled off to compare) hides masks, regions and the
+      // regenerate tint, unless a gesture is editing one of them.
+      const staging = previews.isStagingView() && !deps.isEditingStagingHiddenStack();
       const showOverlayStacks = staging ? STAGING_OVERLAY_STACKS : undefined;
       const frame = describeFrame(doc, isolatedGuard?.layerId ?? null, overrides, showOverlayStacks);
       // Snapshot filter previews only when active, avoiding an empty map allocation every frame.

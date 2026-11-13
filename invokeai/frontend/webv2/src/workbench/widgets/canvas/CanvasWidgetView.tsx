@@ -493,6 +493,11 @@ export const CanvasWidgetView = ({ runtime, instance }: WidgetViewProps) => {
   useEffect(() => {
     applyStagedPreview();
   }, [engine, previewKey]);
+  const isComparingOriginal = !stagingArea.isVisible && !!selectedCandidate;
+  useEffect(() => {
+    engine?.previews.setComparingOriginal(isComparingOriginal);
+    return () => engine?.previews.setComparingOriginal(false);
+  }, [engine, isComparingOriginal]);
   // Clear the preview when the widget (or engine) goes away, so an accepted /
   // discarded candidate never lingers over the canvas.
   useEffect(() => {

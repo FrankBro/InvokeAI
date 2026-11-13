@@ -57,6 +57,7 @@ export interface SamPreviewState {
 export class PreviewStateController {
   private staged: StagedPreviewState | null = null;
   private stagedToken = 0;
+  private comparingOriginal = false;
   private stagedRegions: readonly StagedRegionState[] = [];
   private readonly filters = new Map<string, FilterPreviewState>();
   private readonly filterTokens = new Map<string, number>();
@@ -65,6 +66,21 @@ export class PreviewStateController {
 
   getStaged(): StagedPreviewState | null {
     return this.staged;
+  }
+  /**
+   * Whether the staging view is on: a preview is shown, or a selected candidate's preview is toggled off so the
+   * user can compare with the original. Either way masks and regions stay hidden.
+   */
+  isStagingView(): boolean {
+    return this.staged !== null || this.comparingOriginal;
+  }
+  /** True when the staging view changed. */
+  setComparingOriginal(comparing: boolean): boolean {
+    if (this.comparingOriginal === comparing) {
+      return false;
+    }
+    this.comparingOriginal = comparing;
+    return true;
   }
   nextStagedToken(): number {
     return ++this.stagedToken;
@@ -166,6 +182,7 @@ export class PreviewStateController {
 
   dispose(): void {
     this.clearStaged();
+    this.comparingOriginal = false;
     this.stagedRegions = [];
     this.clearFilters();
     this.sam = null;

@@ -384,8 +384,16 @@ describe('masks while a result is staged', () => {
     drawFrame();
     expect(description()).toBe(hidden);
 
-    // Toggling the preview off (or accepting/discarding) shows them again.
+    // Toggling the preview off to compare with the original keeps them hidden.
     harness.previews.clearStaged();
+    harness.previews.setComparingOriginal(true);
+    drawFrame();
+    expect(drawnIds()).toEqual(['a', 'c']);
+    expect(lastCompositeOptions().regionOverlays).toBe(false);
+    expect(lastCompositeOptions().stagedPreview).toBeNull();
+
+    // Accepting or discarding the candidate shows them again.
+    harness.previews.setComparingOriginal(false);
     drawFrame();
     expect(drawnIds()).toEqual(['a', 'c', 'm', 'r']);
     expect(demandedIds()).toEqual(['a', 'c', 'm', 'r']);
