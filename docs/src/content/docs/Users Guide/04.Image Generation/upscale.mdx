@@ -140,13 +140,13 @@ Where a family has no Tile ControlNet, **Structure** is hidden. Where it ignores
   <TabItem label="MOSS-Image">
     - **Tile ControlNet**: none.
     - **CFG scale**: set when you pick the model: 3.
-    - **Steps**: set when you pick the model: 50. Like FLUX.2, MOSS-Image runs all of **Steps** in the detail pass, so lower it if the pass is slow.
+    - **Steps**: kept as you set it, 30 by default, not the 50 the model uses for a full image. MOSS-Image runs all of **Steps** in the detail pass, so 30 steps really run 30 times, each at the enlarged size and, above CFG 1, as two network passes. Lower it if the pass is slow.
     - **Components**: a **Qwen3.5 Encoder** (9B, not the 4B Anima-3.8B uses) and a FLUX.2 **VAE**. A Diffusers install brings its own.
     - **Not supported**: LoRAs, which MOSS-Image has no loader for.
   </TabItem>
 </Tabs>
 
-A value "set when you pick the model" is the model's default setting, which you can change in the Model Manager. Switching from FLUX.2 or MOSS-Image to another family sets **Steps** back to 30.
+A value "set when you pick the model" is the model's default setting, which you can change in the Model Manager. Switching from FLUX.2 to another family sets **Steps** back to 30.
 
 :::note[Output size]
 FLUX.1, FLUX.2, Z-Image, Krea-2, Qwen Image and MOSS-Image need sizes that are a multiple of 16. When the enlarged image is not, the panel shrinks it slightly to the nearest fitting size before the detail pass: 2040 px becomes 2032 px. Other families, and Model only, round down to a multiple of 8.

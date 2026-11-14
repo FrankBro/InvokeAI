@@ -611,8 +611,7 @@
         "steps": [
           28,
           30,
-          4,
-          50
+          4
         ],
         "structure": [
           0
@@ -1256,7 +1255,7 @@
           true
         ],
         "steps": [
-          50
+          30
         ],
         "use_cache": [
           true

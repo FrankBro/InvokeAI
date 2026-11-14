@@ -907,9 +907,9 @@ const buildQwenImageUpscalePath: UpscalePathBuilder = ({
 };
 
 /**
- * Z-Image's, Anima's, Krea-2's, Qwen Image's and MOSS-Image's text encoders take their encoders on named fields. All
- * but Qwen Image's and MOSS-Image's hand the denoise a collected list; theirs take the one conditioning. The negative branch exists
- * only where the caller decided it is read.
+ * Z-Image's, Anima's, Krea-2's, Qwen Image's and MOSS-Image's text encoders take their encoders on named fields.
+ * All but Qwen Image's and MOSS-Image's hand the denoise a collected list; theirs take the one conditioning. The
+ * negative branch exists only where the caller decided it is read.
  */
 const addPromptConditioning = (
   graph: BackendGraphContract,

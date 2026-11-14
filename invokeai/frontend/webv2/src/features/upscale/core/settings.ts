@@ -326,8 +326,9 @@ export interface UpscaleArchitecture {
    * Whether a new main model sets CFG to that model's served default. Z-Image Turbo and Krea-2 Turbo are
    * distilled for CFG 1, and anything above runs a second, unconditional pass per step at upscale
    * resolution; Z-Image Base, Anima, Krea-2 Raw and Qwen Image want 4 to 6, and FLUX.2 [dev] a guidance of
-   * 3.5 (Klein reads none). SD and FLUX.1 keep the user's CFG -- SD's multi-diffusion pass is tuned to the
-   * widget's 2 -- and get that 2 back when the user comes from one of the others.
+   * 3.5 (Klein reads none); MOSS-Image takes its served 3. SD and FLUX.1 keep the user's CFG -- SD's
+   * multi-diffusion pass is tuned to the widget's 2 -- and get that 2 back when the user comes from one of the
+   * others.
    */
   readonly takesModelGuidance: boolean;
   /**
@@ -460,8 +461,9 @@ export const UPSCALE_ARCHITECTURES = {
     // `moss_image_denoise` has no scheduler input: it steps its own shifted Euler schedule.
     schedulers: ['euler'],
     takesModelGuidance: true,
-    // The re-spaced window runs every step at full upscale resolution, so the served 50 is the node's own choice.
-    takesModelSteps: true,
+    // Not distilled: the served 50 is a full-schedule txt2img default, and the re-spaced window would run all of it
+    // at upscale resolution, two transformer passes each at CFG 3.
+    takesModelSteps: false,
     tileControlNet: null,
   },
   'qwen-image': {
